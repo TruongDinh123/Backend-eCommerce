@@ -1,9 +1,9 @@
 "use strict";
 
 const express = require("express");
-const accessController = require("../../controllers/access.controller");
 const { permission, asyncHandler, apiKey } = require("../../auth/checkAuthen");
 const { authentication } = require("../../auth/authUtils");
+const accessController = require("../../controllers/access.controller");
 const router = express.Router();
 
 //signUp
@@ -33,5 +33,10 @@ router.delete(
 );
 
 router.post("/e-learning/logout", asyncHandler(accessController.logOut));
+
+router.post(
+  "/e-learning/refreshToken",
+  asyncHandler(accessController.handlerRefreshToken)
+);
 
 module.exports = router;
