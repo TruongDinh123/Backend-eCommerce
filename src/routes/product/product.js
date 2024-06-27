@@ -9,49 +9,48 @@ const router = express.Router();
 router.use(authentication);
 
 router.post(
-  "/e-learning/products",
+  "/products",
   permission(["Admin", "Mentor"]),
   asyncHandler(productController.createProduct)
 );
 
 router.post(
-  "/e-learning/published/:product_id",
+  "/published/:product_id",
   permission(["Admin", "Mentor"]),
   asyncHandler(productController.publishProduct)
 );
 
 router.get(
-  "/e-learning/drafts/all",
+  "/drafts/all",
   permission(["Admin", "Mentor"]),
   asyncHandler(productController.getAllDraftsForShop)
 );
 
 router.get(
-  "/e-learning/published/all",
+  "/published/all",
   permission(["Admin", "Mentor"]),
   asyncHandler(productController.getAllPublishForShop)
 );
 
 router.get(
-  "/e-learning/search/:keySearch",
+  "/search/:keySearch",
   permission(["Admin", "Mentor"]),
   asyncHandler(productController.getListSearchProduct)
 );
 
 router.get(
-  "/e-learning/product",
-  permission(["Admin", "Mentor"]),
+  "/product",
   asyncHandler(productController.findAllProducts)
 );
 
 router.get(
-  "/e-learning/product/:product_id",
+  "/product/:product_id",
   permission(["Admin", "Mentor"]),
   asyncHandler(productController.findOneProduct)
 );
 
 router.get(
-  "/e-learning/product/:product_id",
+  "/product/:product_id",
   permission(["Admin", "Mentor"]),
   asyncHandler(productController.updateProduct)
 );

@@ -158,6 +158,40 @@ class DiscountService {
 
     if (!discount_is_active) throw new NotFoundError(`Discount expired`);
     if (!discount_max_uses) throw new NotFoundError(`Discount are out!`);
+
+    let totalOrder = 0;
+    if (discount_min_order_value > 0) {
+      totalOrder = products.reduce((acc, product) => {
+        return acc + product.quantity * discount.price;
+      }, 0);
+    }
+
+    if (totalOrder < discount_min_order_value) {
+      throw new NotFoundError(
+        `Discount require a minimum order value of ${discount_min_order_value}`
+      );
+    }
+
+    if (discount_max_uses > 0) {
+      const useUserDiscount = discount_users_used.find(
+        (user) => user.userId === userId
+      );
+
+      if (useUserDiscount) {
+      }
+    }
+
+    //check xem discount nay la fixed_amount -
+    const amount =
+      discount_type === "fixed_amount"
+        ? discount_value
+        : totalOrder * (discount_value / 100);
+
+    return {
+      totalOrder,
+      discount: amount,
+      totalPrice: totalOrder - amount,
+    };
   }
 }
 

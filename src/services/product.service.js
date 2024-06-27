@@ -73,6 +73,7 @@ class ProductFactory {
         "product_price",
         "product_description",
         "pruduct_thumbnail",
+        "product_account",
       ],
     });
   }

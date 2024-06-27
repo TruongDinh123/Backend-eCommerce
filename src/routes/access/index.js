@@ -7,9 +7,9 @@ const accessController = require("../../controllers/access.controller");
 const router = express.Router();
 
 //signUp
-router.post("/e-learning/signup", asyncHandler(accessController.signUp));
+router.post("/signup", asyncHandler(accessController.signUp));
 
-router.post("/e-learning/login", apiKey, asyncHandler(accessController.login));
+router.post("/login", apiKey, asyncHandler(accessController.login));
 
 //authentication//
 router.use(authentication);
