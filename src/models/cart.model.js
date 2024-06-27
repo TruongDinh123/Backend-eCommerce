@@ -1,5 +1,5 @@
 "use strict";
-const { mongoose } = require("mongoose");
+const mongoose = require("mongoose");
 
 const DOCUMENT_NAME = "Cart";
 const COLLECTION_NAME = "Carts";
