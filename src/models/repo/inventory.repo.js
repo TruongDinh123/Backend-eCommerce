@@ -15,4 +15,10 @@ const insertInventory = async ({
   });
 };
 
+const reservationInventory = async ({ productId, quantity, cardId }) => {
+  const query = {
+    inven_productId: productId,
+  };
+};
+
 module.exports = { insertInventory };
