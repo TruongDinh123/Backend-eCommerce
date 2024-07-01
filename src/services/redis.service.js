@@ -4,6 +4,7 @@ const { profile } = require("console");
 const { resolve } = require("path");
 const redis = require("redis");
 const { promisify } = require("util");
+const { reservationInventory } = require("../models/repo/inventory.repo");
 const redisClient = redis.createClient();
 
 //promisify chuyển đổi 1 function thành 1 function async await
@@ -21,9 +22,21 @@ const acquireLock = async (productId, quantity, cartId) => {
     const result = await setnxAsync(key, expireTime);
 
     if (result === 1) {
-      //thao taac voi inventory
+      //thao tac voi inventory
 
-      return key;
+      const isReversation = await reservationInventory({
+        productId,
+        quantity,
+        cartId,
+      });
+
+      if (isReversation.modifiedCount) {
+        //modifiedCount cho biết số lượng tài liệu đã được sửa đổi khi thực hiện
+        //các hàm updateOne(), updateMany(), hoặc findOneAndUpdate()
+        await pexpire(key, expireTime);
+        return key;
+      }
+      return null;
     } else {
       await new Promise((resolve) => setTimeout(resolve, 50));
     }

@@ -1,9 +1,9 @@
 "use strict";
 
 const _ = require("lodash");
-const { Types } = require("mongoose");
+const { default: mongoose } = require("mongoose");
 
-const convertToObjectIdMongodb = (id) => Types.ObjectId(id);
+const convertToObjectIdMongodb = (id) => mongoose.Types.ObjectId(id);
 
 const getInfoData = ({ fileds = [], object = {} }) => {
   return _.pick(object, fileds);
@@ -27,7 +27,6 @@ const removeundefinedObject = (obj) => {
   });
   return obj;
 };
-
 
 /*
 const a = {
