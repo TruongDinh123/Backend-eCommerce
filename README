@@ -2,3 +2,7 @@ Step 1: git clone https://github.com/95ideal/95elearning.git
 step 2: git connect database mongodb compass mongodb:127.0.0.1:27017/elearning_dev
 step 3: git install
 step 4: npm run dev
+
+Trong mongodb các toán tử như:
+    - $gte là một toán tử truy vấn (query operator) có nghĩa là "greater than or equal to" (lớn hơn hoặc bằng).
+    - $inc trong MongoDB được sử dụng để tăng hoặc giảm giá trị của một trường số (numeric field) trong một tài liệu (document)

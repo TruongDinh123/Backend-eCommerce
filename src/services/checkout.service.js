@@ -1,6 +1,7 @@
-const { NotFoundError } = require("../core/error.response");
+const { NotFoundError, BadRequestError } = require("../core/error.response");
 const { findByCartId } = require("../models/repo/cart.repo");
 const { checkProductByServer } = require("../models/repo/product.repo");
+const { acquireLock, releaseLock } = require("./redis.service");
 
 class CheckoutService {
   static async checkoutReview({ cartId, userId, shop_order_ids }) {
@@ -82,8 +83,21 @@ class CheckoutService {
     const products = shop_order_ids_new.flatMap((order) => order.item_products);
     console.log("🚀 ~ products:", products);
     // thuc hien pessimistic lock
+    const acquireProduct = [];
     for (let i = 0; products < array.length; i++) {
       const { productId, quantity } = products[i];
+      const keyLock = await acquireLock(productId, quantity, cartId);
+      acquireProduct.push(keyLock ? true : false);
+      if (keyLock) {
+        await releaseLock(keyLock);
+      }
+    }
+
+    //check if co 1 san pham het hang trong kho
+    if (acquireProduct.includes(false)) {
+      throw new BadRequestError(
+        "Mot so san pham da duoc cap nhat vui long quay lai gio hang"
+      );
     }
   }
 }
